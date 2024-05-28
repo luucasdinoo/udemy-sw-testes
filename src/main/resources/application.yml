@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: sw_tests
+  web:
+    locale: pt_BR
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/sw_db?useSSL=false&serverTimezone=America/Sao_paulo"
+    username: docker
+    password: docker
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
