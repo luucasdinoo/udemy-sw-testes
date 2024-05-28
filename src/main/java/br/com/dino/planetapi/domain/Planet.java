@@ -1,6 +1,7 @@
 package br.com.dino.planetapi.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,8 +15,14 @@ public class Planet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, unique = true)
+    @NotEmpty
     private String name;
+    @NotEmpty
+    @Column(nullable = false)
     private String climate;
+    @NotEmpty
+    @Column(nullable = false)
     private String terrain;
 
     public Planet(String name, String climate, String terrain){
