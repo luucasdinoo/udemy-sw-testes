@@ -1,5 +1,6 @@
 package br.com.dino.planetapi.domain;
 
+import br.com.dino.planetapi.jacoco.ExcludeFromJacocoGeneratedReport;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -47,4 +48,22 @@ public class Planet {
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(obj, this);
     }
+
+    @ExcludeFromJacocoGeneratedReport
+    @Override
+    public String toString() {
+        return "Planet{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", climate='" + climate + '\'' +
+                ", terrain='" + terrain + '\'' +
+                '}';
+    }
+
+    /*
+    * ./mvnw clean test
+    * ./mvn clean verify
+    * ./mvnw test-compile org.pitest:pitest-maven:mutationCoverage
+    *
+    * */
 }

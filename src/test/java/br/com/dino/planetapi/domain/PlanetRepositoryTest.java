@@ -2,6 +2,9 @@ package br.com.dino.planetapi.domain;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -10,6 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static br.com.dino.planetapi.common.PlanetsConstants.PLANET;
 import static br.com.dino.planetapi.common.PlanetsConstants.TATOOINE;
@@ -36,19 +40,26 @@ public class PlanetRepositoryTest {
     public void createPlanet_WithValidData_ReturnsPlanet(){
         Planet planet = planetRepository.save(PLANET);
         Planet sut = testEntityManager.find(Planet.class, planet.getId());
+
         assertThat(sut).isNotNull();
         assertThat(sut.getName()).isEqualTo(planet.getName());
         assertThat(sut.getClimate()).isEqualTo(planet.getClimate());
         assertThat(sut.getTerrain()).isEqualTo(planet.getTerrain());
     }
 
-    @Test
-    public void createPlanet_WithInvalidData_ReturnThrwsException(){
-        Planet emptyPlanet = new Planet();
-        Planet invalidPlanet = new Planet("","","");
 
-        assertThatThrownBy(() -> planetRepository.save(emptyPlanet)).isInstanceOf(RuntimeException.class);
-        assertThatThrownBy(() -> planetRepository.save(invalidPlanet)).isInstanceOf(RuntimeException.class);
+    @ParameterizedTest
+    @MethodSource("providesInvalidPlanet")
+    public void createPlanet_WithInvalidData_ReturnThrwsException(Planet planet){
+        // Planet emptyPlanet = new Planet();
+        // Planet invalidPlanet = new Planet("","","");
+        assertThatThrownBy(() -> planetRepository.save(planet)).isInstanceOf(RuntimeException.class);
+    }
+
+    private static Stream<Arguments> providesInvalidPlanet(){
+        return Stream.of(
+                Arguments.of(new Planet(null, null, null))
+        );
     }
 
     @Test

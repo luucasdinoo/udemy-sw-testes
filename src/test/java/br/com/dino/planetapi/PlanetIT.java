@@ -1,7 +1,6 @@
 package br.com.dino.planetapi;
 
 import br.com.dino.planetapi.domain.Planet;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
